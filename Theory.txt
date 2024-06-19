@@ -1,0 +1,174 @@
+Types of Modules
+
+    1. Root Module: Main module that bootstraps and launches the application. Mostly named 'AppModule' and it is the starting point for the Angular application. By default all the components, directive and pipes when we created are declared.
+
+    2. Feature Module: A block/folder which will represent a feature in the application. All the components. directive, pipes related to this feature will be declared in this module.
+
+    Create a feature module
+    ng g m module-name
+
+    3. Shared Module: Encapsulate or group together the common functionalities and component that are used across multiple component/modules. By creating shared module we can avoid duplicate code
+
+    Create a shared module
+    ng g m shared
+
+    4. Routing Module: Used to configure and manage the routes of the application. It helps to define the navigation paths and components associated with it
+
+    ng g m app-routing --flat 
+
+    --flat will tell angular to not create the directory
+
+    5. Lazy Loading Module: 
+-----------------------------------------------------------------------
+Service
+
+In Angular, services are the way to share and organize the code or data across the components. Services can be used to perform task like fetching the data from the backend, loggind, authentication, sharing the data among the components and so on.
+
+Create a service
+ng g s servicename
+
+The service class is marked using @Injectable decorator that indicates this service object can be injected in any components or directive or another service using the concept of dependency injection.
+
+Dependency Injection
+DI is used when we want to use the functionality provided by the service in the component, directive, another service. DI will automatically creates the object of the service class and make it available wherever required. We can perform DI in component, directive or another service using the constructor method. The constructor method is first method to be executed when the object of any class is created.
+
+-----------------------------------------------------------------
+OnInit lifecycle hook which used to implement the initialization logic. We can write the initialization logic in the method ngOnInit() which is automatically called after the constructor of the component.
+
+------------------------------------------------------------------
+API Integration / Backend Integration
+
+Backend is the application that resides on a backend server basically used to manage the data, perfome some business logic on the data. We need to communicate with the backend session to get the data which will be displayed in using frontend.
+
+Since we don't have any real backend application, we will use 'json-server' tool to create a fake REST API using a JSON file as the database to test our frontend
+
+Install json-server
+
+npm install -g json-server
+
+To perform the operation on this JSON data we can make use of HttpClient service that specifies the HTTP request methods like
+
+get ==> read the data
+post ==> insert new data
+put ==> update the data
+delete ==> delete the data
+
+To use HttpClient service we will need to import HttpClientModule first
+
+--------------------------------------------------------------
+Interface
+
+Interface in typescript are used to define the structure of the object. Means in interface we can specify the fieldnames that the object should have
+
+We can create an interface using the command:
+
+ng g i interfacename
+
+--------------------------------------------------------------
+Environment
+
+In Angular we have environment files which can be used to manage the configuration setting based on the environment that our project is working in like development, production, etc. 
+
+To add environment file we use the command:
+
+ng g environments
+
+------------------------------------------------------------
+In typescript we can create getter and setter method to control the access of the variable/property of the class
+
+To implement this, we have first declare the variable/property as private in the class. While naming the private variable we will prefix it with (underscore) _ to specify that it is a private variable. Now in order to access this private variable we can create the setter and the getter methods
+
+------------------------------------------------------------
+Routing & Navigation
+
+Routing is the mechanism using which we can navigate from one component to the another using URL.
+
+In Angular we create SPA(Single Page Applications)
+
+Key Features of SPA
+1. Single HTML page: SPA has single HTML page whose content is updated dynamically to load the components based on URL.
+2. Client-side Routing: Here the Navigation within the application is not done using anchor tag rather it is done using javascript or here we will use library called Angular Router.
+
+In order to implement routing in the application first we need to import RouterModule
+
+Steps to implement basic routing in the project:
+1. Import RouterModule in app.module.ts
+2. Define routes for every components. In the router we will define the URL pattern using which the component will be loaded.
+3. The routes array is referred using the forRoot method of the RouterModule. In this step we tell our RouterModule the name of the Routes array that we have to refer for navigation.
+And if the routes are defined in the feature modules, which not our main module then the routes array will be associated with RouterModule using forChild method
+4. In the main component's HTML, we will add <router-outlet> to specify the location where the component is to be loaded.
+5. Update the navigation links in the navbar using the routerLink directive.
+
+Components of RouterModule:
+1. Routes: It is used to define the mapping between the component and the URL. For each route we will specify the URL pattern, component to be loaded and also the title of the page.
+2. RouterOutlet: It is a directive used in the layout of the template to specify the location of the component when a URL is requested.
+3. RouterLink: It is a directive used to specify the URL that we want to navigate to. This will be used as a property when we want to create dynamic paths.
+4. ActivatedRoute: It is service used to access the data that is coming in the path/URL for the component
+5. Router: It is service used to navigate to different URLs via typescript program
+
+What are different ways to define the path in the routing?
+1. static path: fixed paths associated with a component
+2. empty path: default path, with on specific fixed name
+3. wild card path: path that will map any URL, no fixed URL here
+4. dynamic path: path with consist of dynamic variable which will get the value at the runtime. here we cannot have static paths
+
+Query Parameter:
+We will use this to pass the data to the component using the path followed by the data in key-value pair
+
+---------------------------------------------------------
+Forms
+
+Angular provides two approaches to deal with the form implementation.
+These two approaches are:
+
+1. Template-Driven Forms:
+    These forms use directives in the template to create and manipulate the values of the form. This approaches is used to create simple form like email subscription form where we don't require complex validation to be done. These forms are not scalable means we cannot do the changes, add or update the elements of the form at the runtime.
+2. Reactive Forms:
+    These form provides more programmatic approach to the form creation. It is suitable for complex, custom form where we want to apply custom validation logic. To create reactive form, we need to import a module called ReactiveFormsModule
+
+--------------------------------------------
+Interface vs class
+
+Interface and class both are used in Angular to define the structure of the objects
+
+Interface are purely used for type-checking. We cannot create objects manually rather objects are automatically created. Basically it is used to just define what fields the object needs to have.
+
+Class are the blueprint for creating objects where we will also specify the initial values.
+
+---------------------------------------------
+In Angular Forms, form controls go through sereral phases and Angular applies CSS class to form control to indicate these phases. These classes can be used to style the contro; 
+
+1. Touched vs Untouched
+Touched (ng-touched) : User has visited the control
+Untouched (ng-untouched) : User has not visited the control
+
+2. Dirty vs Pristine
+Dirty (ng-dirty) : User has changed the value of the control
+Pristine (ng-pristine) : User has not changed the value of the control
+
+3. Valid vs Invalid
+Valid (ng-valid) : Control value meets the validation criteria
+Invalid (ng-invalid) : Control value does not meet the validation criteria
+
+These same phases are also applied on the form.
+
+---------------------------------------------
+Template variable
+
+Template variable is a variable that is declared in the template and can be used in the template itself. They are declared inside the template and can be used only within the template. These variable can be used to access the properties of the component, directive or DOM elements.
+
+Template variable is declare using the # symbol followed by the variable name.
+
+When we use form, we can use the template variable to refer the control to access its validation and state(6 phases)
+
+#variablename="ngModel"
+
+----------------------------------------------
+Reactive Forms
+
+The steps to create a reactive form:
+
+1. Define the structure and validation in the component class using classes like FormGroup for form, FormControl for controls
+2. Define the template of the form
+3. Map the controls created in the class with the actual form controls.
+
